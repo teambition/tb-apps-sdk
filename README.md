@@ -10,9 +10,11 @@
 
 `isCI`: 环境判断
 
-`onSuccess`: 方法对应参数
+`origin`: 插件的origin
 
-`onError`: 环境判断
+`onSuccess`
+
+`onError`
 
 ### notify
 
