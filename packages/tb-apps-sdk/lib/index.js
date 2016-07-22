@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var ORIGIN_CI = 'http://project.ci';
-var ORIGIN_PROD = 'http://teambition.com';
+var ORIGIN_PROD = 'https://www.teambition.com';
 
 var toggleEventListener = function toggleEventListener(callback, isRemove) {
   var func = isRemove ? 'removeEventListener' : 'addEventListener';
