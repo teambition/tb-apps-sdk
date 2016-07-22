@@ -1,5 +1,5 @@
 const ORIGIN_CI = 'http://project.ci'
-const ORIGIN_PROD = 'http://teambition.com'
+const ORIGIN_PROD = 'https://www.teambition.com'
 
 const toggleEventListener = (callback, isRemove) => {
   const func = isRemove ? 'removeEventListener' : 'addEventListener';
