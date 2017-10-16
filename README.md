@@ -12,6 +12,8 @@
 
 `origin`: 插件的origin
 
+`toOrigin`: 目标地址的 URL
+
 `onSuccess`
 
 `onError`

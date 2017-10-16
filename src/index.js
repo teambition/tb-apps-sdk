@@ -22,11 +22,19 @@ const notify = ({isCI, origin, onError, onSuccess, params}) => {
   });
 };
 
-const callService = ({isCI, method, params, onSuccess, onError, origin: fromOrigin}) => {
+const callService = ({
+  isCI,
+  method,
+  params,
+  onSuccess,
+  onError,
+  origin: fromOrigin,
+  toOrigin
+}) => {
   const postId = Date.now();
-  const toOrigin = isCI ? ORIGIN_CI : ORIGIN_PROD;
+  const targetOrigin = toOrigin || (isCI ? ORIGIN_CI : ORIGIN_PROD);
   const content = {method, params, postId, origin: fromOrigin};
-  window.parent.postMessage(content, toOrigin);
+  window.parent.postMessage(content, targetOrigin);
   const callback = ({data}) => {
     if (postId !== data.postId) return
     if (data.error) {
