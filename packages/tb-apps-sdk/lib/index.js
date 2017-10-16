@@ -19,11 +19,11 @@ var consoleError = function consoleError(_ref) {
 };
 
 var notify = function notify(_ref2) {
-  var isCI = _ref2.isCI;
-  var origin = _ref2.origin;
-  var onError = _ref2.onError;
-  var onSuccess = _ref2.onSuccess;
-  var params = _ref2.params;
+  var isCI = _ref2.isCI,
+      origin = _ref2.origin,
+      onError = _ref2.onError,
+      onSuccess = _ref2.onSuccess,
+      params = _ref2.params;
 
   callService({
     isCI: isCI,
@@ -36,17 +36,18 @@ var notify = function notify(_ref2) {
 };
 
 var callService = function callService(_ref3) {
-  var isCI = _ref3.isCI;
-  var method = _ref3.method;
-  var params = _ref3.params;
-  var onSuccess = _ref3.onSuccess;
-  var onError = _ref3.onError;
-  var fromOrigin = _ref3.origin;
+  var isCI = _ref3.isCI,
+      method = _ref3.method,
+      params = _ref3.params,
+      onSuccess = _ref3.onSuccess,
+      onError = _ref3.onError,
+      fromOrigin = _ref3.origin,
+      toOrigin = _ref3.toOrigin;
 
   var postId = Date.now();
-  var toOrigin = isCI ? ORIGIN_CI : ORIGIN_PROD;
+  var targetOrigin = toOrigin || (isCI ? ORIGIN_CI : ORIGIN_PROD);
   var content = { method: method, params: params, postId: postId, origin: fromOrigin };
-  window.parent.postMessage(content, toOrigin);
+  window.parent.postMessage(content, targetOrigin);
   var callback = function callback(_ref4) {
     var data = _ref4.data;
 
