@@ -4,13 +4,10 @@
   "description": "A sdk for communications between teambiton web and plugins",
   "main": "lib/index.js",
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "tsc ./index --outDir lib",
     "prepublish": "npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/teambition/tb-apps-sdk.git"
-  },
+  "repository": "https://github.com/teambition/tb-apps-sdk.git",
   "keywords": [
     "teambition",
     "plugin"
@@ -22,11 +19,6 @@
   },
   "homepage": "https://github.com/teambition/tb-apps-sdk",
   "devDependencies": {
-    "babel-cli": "^6.10.1",
-    "babel-preset-es2015": "^6.9.0",
-    "eslint": "^3.0.1",
-    "eslint-config-standard": "^6.0.0-beta.0",
-    "eslint-plugin-promise": "^2.0.0",
-    "eslint-plugin-standard": "^2.0.0"
+    "typescript": "^2.8.3"
   }
 }

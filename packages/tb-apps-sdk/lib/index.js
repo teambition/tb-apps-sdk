@@ -1,69 +1,26 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+"use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+};
+exports.__esModule = true;
 var ORIGIN_CI = 'http://project.ci';
 var ORIGIN_PROD = 'https://www.teambition.com';
-
-var toggleEventListener = function toggleEventListener(callback, isRemove) {
-  var func = isRemove ? 'removeEventListener' : 'addEventListener';
-  return window[func]('message', callback, false);
+exports.notify = function (args) { return exports.callService(__assign({}, args, { method: 'essage' })); };
+exports.callService = function (_a) {
+    var isCI = _a.isCI, _b = _a.toOrigin, toOrigin = _b === void 0 ? isCI ? ORIGIN_CI : ORIGIN_PROD : _b, data = __rest(_a, ["isCI", "toOrigin"]);
+    return window.parent.postMessage(JSON.parse(JSON.stringify(data)), toOrigin);
 };
-
-var consoleError = function consoleError(_ref) {
-  var error = _ref.error;
-
-  var errorMessage = error || 'ERROR';
-  return console.error(errorMessage);
-};
-
-var notify = function notify(_ref2) {
-  var isCI = _ref2.isCI,
-      origin = _ref2.origin,
-      onError = _ref2.onError,
-      onSuccess = _ref2.onSuccess,
-      params = _ref2.params;
-
-  callService({
-    isCI: isCI,
-    origin: origin,
-    params: params,
-    onSuccess: onSuccess,
-    onError: onError,
-    method: 'essage'
-  });
-};
-
-var callService = function callService(_ref3) {
-  var isCI = _ref3.isCI,
-      method = _ref3.method,
-      params = _ref3.params,
-      onSuccess = _ref3.onSuccess,
-      onError = _ref3.onError,
-      fromOrigin = _ref3.origin,
-      toOrigin = _ref3.toOrigin;
-
-  var postId = Date.now();
-  var targetOrigin = toOrigin || (isCI ? ORIGIN_CI : ORIGIN_PROD);
-  var content = { method: method, params: params, postId: postId, origin: fromOrigin };
-  window.parent.postMessage(content, targetOrigin);
-  var callback = function callback(_ref4) {
-    var data = _ref4.data;
-
-    if (postId !== data.postId) return;
-    if (data.error) {
-      onError = onError || consoleError;
-      onError(data);
-    } else {
-      if (typeof onSuccess === "function") {
-        onSuccess(data);
-      }
-    }
-    toggleEventListener(callback, true);
-  };
-  toggleEventListener(callback);
-};
-
-exports.notify = notify;
-exports.callService = callService;
