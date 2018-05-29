@@ -1,0 +1,46 @@
+defaults: &defaults
+  working_directory: ~/tb-apps-sdk
+  docker:
+    - image: circleci/node:8
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: echo 'export PATH=${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin' >> $BASH_ENV
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: yarn
+          command: |
+            yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ~/.cache/yarn
+      - run: npm run build
+      - persist_to_workspace:
+          root: ~/tb-apps-sdk
+          paths:
+            - ./*
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/tb-apps-sdk
+      - run: npm run lint
+      - run: npm run cover
+      - run:
+          name: test-coverage
+          command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+
+workflows:
+  version: 2
+  build_test_and_deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
