@@ -9,7 +9,7 @@ export type IframeMessageType = {
   origin: string
   toOrigin?: string
 
-  onSuccess?(): void 
+  onSuccess?(): void
   onError?({ error: any }): void
 }
 

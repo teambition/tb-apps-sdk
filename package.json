@@ -1,12 +1,14 @@
 {
   "name": "tb-apps-sdk",
-  "version": "0.0.5",
-  "description": "A sdk for communications between teambiton web and plugins",
-  "main": "lib/index.js",
+  "version": "0.6.0-alpha.0",
+  "description": "A sdk for communications between teambiton web and other envs.",
+  "main": ".",
   "scripts": {
-    "build": "tsc ./index --outDir lib",
-    "prepublish": "npm run build"
+    "build": "rm -rf ./lib && tsc -p ./tsconfig.json",
+    "publish_sdk": "npm run build && cp README.md package.json ./lib && npm publish ./lib",
+    "lint": "tslint -c tslint.json src/*.ts --project ./tsconfig.json \"src/**/*.ts\" \"./test/**/*.ts\" -e \"./test/e2e/*.ts\""
   },
+  "typings": "index.d.ts",
   "repository": "https://github.com/teambition/tb-apps-sdk.git",
   "keywords": [
     "teambition",
@@ -18,7 +20,13 @@
     "url": "https://github.com/teambition/tb-apps-sdk/issues"
   },
   "homepage": "https://github.com/teambition/tb-apps-sdk",
+  "peerDependencies": {
+    "tslib": "^1.6.0"
+  },
   "devDependencies": {
-    "typescript": "^2.8.3"
+    "typescript": "^2.8.3",
+    "tslib": "^1.6.0",
+    "tslint": "^5.9.1",
+    "tslint-eslint-rules": "^5.1.0"
   }
 }
