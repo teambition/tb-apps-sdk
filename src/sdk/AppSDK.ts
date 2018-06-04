@@ -103,7 +103,12 @@ export class AppSDK {
             const hostNodeSelector = resp.data.payload
             if (this.sameOrigin) {
               const node = this.source.document.querySelector(hostNodeSelector)
-              handler(node)
+              // 兼容 shadow dom
+              if (node.shadowRoot) {
+                handler(node.shadowRoot)
+              } else {
+                handler(node)
+              }
             } else {
               connector.reject(new Error(CrossOrigin))
             }

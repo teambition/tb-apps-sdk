@@ -10,6 +10,10 @@ export enum MessageType {
   ACK = 'ACK',
 }
 
+export enum HostNode {
+  Prefix = 'Host-'
+}
+
 export interface Procedures {
   [key: number]: ProcedureConnector
 }
