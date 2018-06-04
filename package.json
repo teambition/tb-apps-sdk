@@ -2,7 +2,7 @@
   "name": "tb-apps-sdk",
   "version": "0.6.0-alpha.1",
   "description": "A sdk for communications between teambiton web and other envs.",
-  "main": ".",
+  "main": "./index.js",
   "scripts": {
     "build": "rm -rf ./lib && tsc -p ./tsconfig.json",
     "publish_sdk": "npm run build && cp README.md package.json ./lib && npm publish ./lib",
