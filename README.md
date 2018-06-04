@@ -91,8 +91,6 @@ mockEnv.openDetail()
 | isCI | 是否是 CI 环境 | boolean | / |
 | origin | UNKNOWN | string | - |
 | toOrigin | 反向通讯的地址 | string | / |
-| onSuccess | 执行成功后的回调 | () => void | / |
-| onError | 执行失败后的回调 | ({ error }) => void | / |
 
 ##### `Class: AppSDK`
 

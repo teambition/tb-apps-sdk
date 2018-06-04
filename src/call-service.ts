@@ -8,9 +8,6 @@ export type IframeMessageType = {
   isCI?: boolean
   origin: string
   toOrigin?: string
-
-  onSuccess?(): void
-  onError?({ error: any }): void
 }
 
 export const notify = (args) => callService({ ...args, method: 'essage' })
