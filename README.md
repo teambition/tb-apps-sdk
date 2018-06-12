@@ -1,26 +1,113 @@
+[![Coverage Status](https://coveralls.io/repos/github/teambition/tb-apps-sdk/badge.svg?branch=master)](https://coveralls.io/github/teambition/tb-apps-sdk?branch=refactor/typescript)
+[![CircleCI](https://circleci.com/gh/teambition/tb-apps-sdk.svg?style=svg)](https://circleci.com/gh/teambition/tb-apps-sdk)
+
 # tb-apps-sdk
 
-## 接口
+Teambition Host Environment API Bridge
 
-### callService
+## How to build
 
-`method`: web 中方法名
+```js
+npm run build
+```
 
-`params`: 方法对应参数
+## How to publish
+```js
+npm run publish_sdk
+```
 
-`isCI`: 环境判断
+## For Plugin
 
-`origin`: 插件的origin
+```ts
+// in plugin
+import { callService } from 'tb-apps-sdk'
 
-`toOrigin`: 目标地址的 URL
+callService({ isCI: true, method: 'essage', params: [/* ... */] })
+```
 
-`onSuccess`
+## For Other Environment
 
-`onError`
+### 3rd-part
 
-### notify
+```ts
+// in 3rd env (e.g. Dashboard)
+import { sdk } from 'sdk'
+import { AppSDK } from 'tb-apps-sdk'
+import { hostAPI } from 'tb-apps-sdk/api/internal'
 
-`callService` with `method` set to "essage"
+const webApp = AppSDK.fork(hostAPI)
+webApp.init()
+
+sdk.fetch.getTask().subscribe(task => {
+  webApp.openDetail('task', task._id)
+})
+```
+
+### Platform
+
+```ts
+// in host env (e.g. web)
+import { RemoteSchema } from 'tb-apps-sdk'
+import { InternalAPI } from 'tb-apps-sdk/api/internal'
+
+class PlatformAPI implements RemoteSchema<InternalAPI> {
+
+  openDetail() {
+    // ...
+  }
+
+}
+```
+
+### How to mock
+
+```ts
+import { AppSDK } from 'tb-apps-sdk'
+import { InternalAPI } from 'tb-apps-sdk/api/internal'
+import { factory } from 'tb-apps-sdk/api/base'
+
+class MockAPI implements InternalAPI {
+
+  openDetail(...params: any[]) {
+    console.log('Method openDetail was called.', params)
+  }
+
+}
+
+const mockAPI = (sdk: AppSDK) => {
+  return factory(sdk, MockAPI)
+}
+
+const mockEnv = AppSDK.fork(mockAPI)
+mockEnv.openDetail()
+```
+
+## Interface
+##### `Function: callService = (data: IframeMessageType) => void`
+
+##### `Interface: IframeMessageType`
+
+| 属性 | 说明 | 类型 | 默认值 |
+| - | - | - | - |
+| method | 指定调用的方法 | string | - |
+| params | 指定调用的方法的参数 | any | - |
+| isCI | 是否是 CI 环境 | boolean | / |
+| origin | UNKNOWN | string | - |
+| toOrigin | 反向通讯的地址 | string | / |
+| onSuccess | 执行成功后的回调 | () => void | / |
+| onError | 执行失败后的回调 | ({ error }) => void | / |
+
+##### `Class: AppSDK`
+
+- ```Static Method: AppSDK.fork<T, K>(service, onPush, requestTimeout, connectTimeout)```
+
+| 属性 | 说明 | 类型 | 默认值 |
+| - | - | - | - |
+| service | 指定装载的宿主 API 配置容器 | (sdk: AppSDK) => T | - |
+| onPush | 指定宿主环境主动推送时的回调 | (data: K) => void | - |
+| requestTimeout | 指定远端调用最大超时时间 | number | 10000 |
+| connectTimeout | 指定远端连接最大超时时间 | number | 60000 |
 
 ## License
 MIT
+
