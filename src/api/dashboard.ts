@@ -3,11 +3,13 @@ import { APIBase, factory, IFactory } from './base'
 
 export interface DashboardAPI {
   registerHostNode(): Promise<HTMLElement>
+  setReady(): Promise<void>
   essage(type: 'show' | 'error' | 'log' | 'success' | 'warning', ...params: any[]): Promise<void>
-  openDetail(type: 'task' | 'date' | 'file' | 'post' | 'bookkeeping', ...params: any[]): Promise<void>
+  openDetail(type: 'task' | 'event' | 'work' | 'post' | 'entry' | 'collection', ...params: any[]): Promise<void>
   openDashboardModal(...params: any[]): Promise<void>
   closeFloat(): Promise<void>
   transferStyleNode(...params: any[]): Promise<void>
+  handlePlugin(...params: any[]): Promise<void>
 }
 
 class HostAPI extends APIBase {
@@ -18,6 +20,10 @@ class HostAPI extends APIBase {
 
   transferStyleNode(...params: any[]) {
     return this.call('transferStyleNode', ...params)
+  }
+
+  setReady(...params: any[]) {
+    return this.call('setReady', ...params)
   }
 
   essage(...params: any[]) {
@@ -34,6 +40,10 @@ class HostAPI extends APIBase {
 
   closeFloat(...params: any[]) {
     return this.call('closeFloat', ...params)
+  }
+
+  handlePlugin(...params: any[]) {
+    return this.call('handlePluginClick', ...params)
   }
 
 }
