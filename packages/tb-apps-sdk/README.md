@@ -26,8 +26,9 @@ callService({ isCI: true, method: 'essage', params: { /* 参数 */ } })
 ```
 
 openDetail
-```
+```ts
 callService({ origin: PLUGIN_ORIGIN, method: 'open', params: { _id: TASKID }, toOrigin: TARGET_ORIGIN_ADDRESS })
+
 // TARGET_ORIGIN_ADDRESS e.g. www.teambition.com 或者 其他部署地址 或者 通配符 *
 // PLUGIN_ORIGIN e.g. 当前页面的 origin 可以使用 document.origin
 ```
