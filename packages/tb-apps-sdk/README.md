@@ -22,7 +22,14 @@ npm run publish_sdk
 // in plugin
 import { callService } from 'tb-apps-sdk'
 
-callService({ isCI: true, method: 'essage', params: [/* ... */] })
+callService({ isCI: true, method: 'essage', params: { /* 参数 */ } })
+```
+
+openDetail
+```
+callService({ origin: PLUGIN_ORIGIN, method: 'open', params: { _id: TASKID }, toOrigin: TARGET_ORIGIN_ADDRESS })
+// TARGET_ORIGIN_ADDRESS e.g. www.teambition.com 或者 其他部署地址 或者 通配符 *
+// PLUGIN_ORIGIN e.g. 当前页面的 origin 可以使用 document.origin
 ```
 
 ## For Other Environment
@@ -92,7 +99,7 @@ mockEnv.openDetail()
 | method | 指定调用的方法 | string | - |
 | params | 指定调用的方法的参数 | any | - |
 | isCI | 是否是 CI 环境 | boolean | / |
-| origin | UNKNOWN | string | - |
+| origin | fromOrigin | string | - |
 | toOrigin | 反向通讯的地址 | string | / |
 | onSuccess | 执行成功后的回调 | () => void | / |
 | onError | 执行失败后的回调 | ({ error }) => void | / |
