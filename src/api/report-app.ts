@@ -5,6 +5,8 @@ export interface ReportAppAPI {
   start(...params: any[]): Promise<void>
   essage(type: 'show' | 'error' | 'log' | 'success' | 'warning', ...params: any[]): Promise<void>
   finish(...params: any[]): Promise<void>
+  requestLeavingLock(): Promise<void>
+  releaseLeavingLock(): Promise<void>
 }
 
 class HostAPI extends APIBase {
@@ -19,6 +21,14 @@ class HostAPI extends APIBase {
 
   finish(...params: any[]) {
     return this.call('finish', ...params)
+  }
+
+  requestLeavingLock() {
+    return this.call('requestLeavingLock')
+  }
+
+  releaseLeavingLock() {
+    return this.call('releaseLeavingLock')
   }
 
 }
