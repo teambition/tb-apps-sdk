@@ -7,7 +7,7 @@
     "precommit": "lint-staged",
     "build": "rm -rf ./lib && tsc -p ./tsconfig.json",
     "publish_sdk": "npm run build && cp README.md package.json ./lib && npm publish ./lib",
-    "cover": "rm -rf ./coverage ./.nyc_output && nyc --reporter=html --reporter=lcov --exclude=node_modules --exclude=test --exclude=lib/api/* --exclude=lib/call-service.js mocha && nyc report",
+    "cover": "rm -rf ./lib && tsc --outDir lib --sourcemap -m commonjs && rm -rf ./coverage ./.nyc_output && nyc --reporter=html --reporter=lcov --exclude=node_modules --exclude=test --exclude=lib/api/* --exclude=lib/call-service.js mocha && nyc report",
     "lint": "tslint -c tslint.json src/*.ts --project ./tsconfig.json \"src/**/*.ts\" \"./test/**/*.ts\" -e \"./test/e2e/*.ts\"",
     "test": "mocha"
   },
