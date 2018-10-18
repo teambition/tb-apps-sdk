@@ -104,7 +104,7 @@ export class AppSDK {
           this.targetId = resp.data.targetId
           this.targetOrigin = resp.data.origin
           this.initialize = true
-          this.source = resp.source
+          this.source = resp.source as Window
           this.sameOrigin = resp.data.origin === document.location.origin
           this.connector.resolve()
         }

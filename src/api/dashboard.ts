@@ -10,6 +10,8 @@ export interface DashboardAPI {
   closeFloat(): Promise<void>
   transferStyleNode(...params: any[]): Promise<void>
   handlePlugin(...params: any[]): Promise<void>
+  navigate(...params: any[]): Promise<void>
+  showGuide(...params: any[]): Promise<void>
 }
 
 class HostAPI extends APIBase {
@@ -44,6 +46,14 @@ class HostAPI extends APIBase {
 
   handlePlugin(...params: any[]) {
     return this.call('handlePlugin', ...params)
+  }
+
+  navigate(...params: any[]) {
+    return this.call('navigate', ...params)
+  }
+
+  showGuide(...params: any[]) {
+    return this.call('showGuide', ...params)
   }
 
 }
