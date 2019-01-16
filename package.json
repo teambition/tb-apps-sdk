@@ -1,6 +1,6 @@
 {
   "name": "tb-apps-sdk",
-  "version": "0.6.5",
+  "version": "0.6.6-alpha.0",
   "description": "A sdk for communications between teambiton web and other envs.",
   "main": "./index.js",
   "scripts": {
