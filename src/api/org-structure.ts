@@ -6,6 +6,7 @@ export interface OrgStructureAPI {
   essage(type: 'show' | 'error' | 'log' | 'success' | 'warning', ...params: any[]): Promise<void>
   finish(...params: any[]): Promise<void>
   openChatWindow(...params: any[]): Promise<void>
+  openPluginLayer(...params: any[]): Promise<void>
   navigate(...params: any[]): Promise<void>
   openDetail(type: 'task' | 'event' | 'work' | 'post' | 'entry' | 'collection', ...params: any[]): Promise<void>
   openTeamStructure(...params: any[]): Promise<void>
@@ -80,6 +81,10 @@ class HostAPI extends APIBase {
 
   openChatWindow(...params: any[]) {
     return this.call('openChatWindow', ...params)
+  }
+
+  openPluginLayer(...params: any[]) {
+    return this.call('openPluginLayer', ...params)
   }
 
   navigate(...params: any[]) {
