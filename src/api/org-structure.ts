@@ -7,6 +7,8 @@ export interface OrgStructureAPI {
   finish(...params: any[]): Promise<void>
   openChatWindow(...params: any[]): Promise<void>
   openPluginLayer(...params: any[]): Promise<void>
+  closePluginLayer(...params: any[]): Promise<void>
+  dispatchAction(...params: any[]): Promise<void>
   navigate(...params: any[]): Promise<void>
   openDetail(type: 'task' | 'event' | 'work' | 'post' | 'entry' | 'collection', ...params: any[]): Promise<void>
   openTeamStructure(...params: any[]): Promise<void>
@@ -85,6 +87,14 @@ class HostAPI extends APIBase {
 
   openPluginLayer(...params: any[]) {
     return this.call('openPluginLayer', ...params)
+  }
+
+  closePluginLayer(...params: any[]) {
+    return this.call('closePluginLayer', ...params)
+  }
+
+  dispatchAction(...params: any[]) {
+    return this.call('dispatchAction', ...params)
   }
 
   navigate(...params: any[]) {
