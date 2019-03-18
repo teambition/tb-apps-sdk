@@ -1,30 +1,14 @@
 {
   "name": "tb-apps-sdk",
-  "version": "0.6.10",
-  "description": "A sdk for communications between teambiton web and other envs.",
-  "main": "./index.js",
+  "private": true,
   "scripts": {
-    "precommit": "lint-staged",
-    "build": "rm -rf ./lib && tsc -p ./tsconfig.json",
-    "publish_sdk": "npm run build && cp README.md package.json ./lib && npm publish ./lib",
-    "cover": "rm -rf ./lib && tsc --outDir lib --sourcemap -m commonjs && rm -rf ./coverage ./.nyc_output && nyc --reporter=html --reporter=lcov --exclude=node_modules --exclude=test --exclude=lib/api/* --exclude=lib/call-service.js mocha && nyc report",
-    "lint": "tslint -c tslint.json src/*.ts --project ./tsconfig.json \"src/**/*.ts\" \"./test/**/*.ts\" -e \"./test/e2e/*.ts\"",
-    "test": "mocha"
-  },
-  "typings": "index.d.ts",
-  "repository": "https://github.com/teambition/tb-apps-sdk.git",
-  "keywords": [
-    "teambition",
-    "plugin"
-  ],
-  "author": "teambition",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/teambition/tb-apps-sdk/issues"
-  },
-  "homepage": "https://github.com/teambition/tb-apps-sdk",
-  "peerDependencies": {
-    "tslib": "^1.6.0"
+    "clean": "lerna clean --yes && rm -rf node_modules",
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
+    "prerelease": "yarn lint && yarn build && yarn test && lerna run prepublish",
+    "precommit": "lerna run precommit",
+    "release": "lerna publish --contents ./lib"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",
