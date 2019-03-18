@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib",
+    "checkJs": false,
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "importHelpers": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "pretty": true,
+    "declaration": true,
+    "lib": [
+      "es5",
+      "es2015",
+      "dom",
+    ]
+  }
+}
