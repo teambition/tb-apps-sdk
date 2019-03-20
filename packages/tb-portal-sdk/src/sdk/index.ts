@@ -26,11 +26,13 @@ export interface IframeInitConfig {
 export class URLSync {
   private static instance?: URLSync
 
-  private parentOrigin: string
-  private redirectURL?: string
-  private listenHash?: boolean
-  private hashChangeHandler?: IframeInitConfig['hashChangeHandler']
-  private popStateHandler?: IframeInitConfig['popStateHandler']
+  private readonly parentOrigin: string
+  private readonly redirectURL?: string
+  private readonly listenHash?: boolean
+  private readonly hashChangeHandler?: IframeInitConfig['hashChangeHandler']
+  private readonly popStateHandler?: IframeInitConfig['popStateHandler']
+
+  private lastRoute = ''
 
   static IframeInit(config: IframeInitConfig) {
     if (URLSync.instance) {
@@ -64,6 +66,38 @@ export class URLSync {
     }
   }
 
+  private onHashChange = (e: HashChangeEvent) => {
+    if (e.newURL === this.lastRoute) {
+      return
+    }
+
+    window.parent.postMessage({
+      type: EventType.UpdateURL,
+      newURL: e.newURL,
+    }, this.parentOrigin || '*')
+
+    this.lastRoute = e.oldURL
+  }
+
+  private onMessage = (e: MessageEvent) => {
+    if (this.parentOrigin && e.origin !== this.parentOrigin) {
+      return
+    }
+
+    if (e.data) {
+      switch ((e.data as EventData).type) {
+        case EventType.HashChange:
+          this.hashChangeHandler && this.hashChangeHandler(e.data)
+          break
+        case EventType.PopState:
+          this.popStateHandler && this.popStateHandler(e.data)
+          break
+        default:
+          break
+      }
+    }
+  }
+
   init() {
     if (!this.inIframe) {
       this.redirectURL && window.location.replace(this.redirectURL)
@@ -72,37 +106,17 @@ export class URLSync {
 
     this.updateParentURL()
 
-    let lastRoute = ''
-    this.listenHash && window.addEventListener('hashchange', e => {
-      if (e.newURL === lastRoute) {
-        return
-      }
+    this.listenHash && window.addEventListener('hashchange', this.onHashChange)
+    window.addEventListener('message', this.onMessage)
+  }
 
-      window.parent.postMessage({
-        type: EventType.UpdateURL,
-        newURL: e.newURL,
-      },  this.parentOrigin || '*')
-      lastRoute = e.oldURL
-    })
+  destroy() {
+    if (!this.inIframe) {
+      return
+    }
 
-    window.addEventListener('message', e => {
-      if (this.parentOrigin && e.origin !== this.parentOrigin) {
-        return
-      }
-
-      if (e.data) {
-        switch ((e.data as EventData).type) {
-          case EventType.HashChange:
-            this.hashChangeHandler && this.hashChangeHandler(e.data)
-            break
-          case EventType.PopState:
-            this.popStateHandler && this.popStateHandler(e.data)
-            break
-          default:
-            break
-        }
-      }
-    })
+    this.listenHash && window.removeEventListener('hashchange', this.onHashChange)
+    window.removeEventListener('message', this.onMessage)
   }
 
   updateParentURL() {

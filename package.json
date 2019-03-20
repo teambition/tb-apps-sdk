@@ -6,7 +6,7 @@
     "build": "lerna run build",
     "test": "lerna run test",
     "lint": "lerna run lint",
-    "prerelease": "yarn lint && yarn test && yarn build && lerna run prepublish",
+    "prerelease": "yarn lint && yarn build && yarn test && lerna run prepublish",
     "precommit": "lerna run precommit",
     "release": "lerna publish --contents ./lib"
   },
