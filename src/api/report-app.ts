@@ -3,7 +3,7 @@ import { APIBase, factory, IFactory } from './base'
 
 export interface ReportAppAPI {
   start(...params: any[]): Promise<void>
-  essage(type: 'show' | 'error' | 'log' | 'success' | 'warning', ...params: any[]): Promise<void>
+  essage(type: 'error' | 'info' | 'open' | 'success' | 'warning', ...params: any[]): Promise<void>
   finish(...params: any[]): Promise<void>
   requestLeavingLock(): Promise<void>
   releaseLeavingLock(): Promise<void>

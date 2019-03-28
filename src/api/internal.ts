@@ -3,7 +3,7 @@ import { APIBase, factory, IFactory } from './base'
 
 export interface InternalAPI {
   registerHostNode(): Promise<HTMLElement>
-  essage(type: 'show' | 'error' | 'log' | 'success' | 'warning', ...params: any[]): Promise<void>
+  essage(type: 'error' | 'info' | 'open' | 'success' | 'warning', ...params: any[]): Promise<void>
   openDetail(type: 'task' | 'date' | 'file' | 'post' | 'bookkeeping', ...params: any[]): Promise<void>
 }
 

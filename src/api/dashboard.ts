@@ -4,7 +4,7 @@ import { APIBase, factory, IFactory } from './base'
 export interface DashboardAPI {
   registerHostNode(): Promise<HTMLElement>
   setReady(): Promise<void>
-  essage(type: 'show' | 'error' | 'log' | 'success' | 'warning', ...params: any[]): Promise<void>
+  essage(type: 'error' | 'info' | 'open' | 'success' | 'warning', ...params: any[]): Promise<void>
   openDetail(type: 'task' | 'event' | 'work' | 'post' | 'entry' | 'collection', ...params: any[]): Promise<void>
   openDashboardModal(...params: any[]): Promise<void>
   closeFloat(): Promise<void>
