@@ -3,7 +3,7 @@ import { APIBase, factory, IFactory } from './base'
 
 export interface OrgStructureAPI {
   start(...params: any[]): Promise<void>
-  essage(type: 'show' | 'error' | 'log' | 'success' | 'warning', ...params: any[]): Promise<void>
+  essage(type: 'error' | 'info' | 'open' | 'success' | 'warning', ...params: any[]): Promise<void>
   finish(...params: any[]): Promise<void>
   openChatWindow(...params: any[]): Promise<void>
   openPluginLayer(...params: any[]): Promise<void>
