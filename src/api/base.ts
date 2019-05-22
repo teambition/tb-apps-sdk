@@ -34,8 +34,8 @@ export class APIBase {
     this.sdk.destroy()
   }
 
-  call(name: string, ...params: any[]): any {
-    return this.sdk.send(
+  call<T = void>(name: string, ...params: any[]): Promise<T> {
+    return this.sdk.send<T>(
       { method: name, params: params || [] /*, version: this.version */ },
       this.isolatedAPI().indexOf(name) > -1
     )

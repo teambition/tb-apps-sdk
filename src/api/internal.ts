@@ -14,7 +14,7 @@ class HostAPI extends APIBase {
   }
 
   registerHostNode(...params: any[]) {
-    return this.call('registerHostNode', ...params)
+    return this.call<HTMLElement>('registerHostNode', ...params)
   }
 
   transferStyleNode(...params: any[]) {
