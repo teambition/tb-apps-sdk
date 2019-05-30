@@ -23,7 +23,7 @@ export interface PluginAPI {
 class HostAPI extends APIBase implements PluginAPI {
   essage(type: PluginAPIEssageType, config: PluginAPIEssageConfig) {
     bridge && bridge.call('showToast', { type, ...config })
-    return this.call('essage', config)
+    return this.call('essage', type, config)
   }
 
   refresh() {
