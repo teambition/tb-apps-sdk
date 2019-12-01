@@ -21,3 +21,21 @@ export const callService = ({
   ...data
 }: IframeMessageType) =>
   window.parent.postMessage(JSON.parse(JSON.stringify(data)), toOrigin)
+
+export const subscribeTask = (origin: string = '*') => {
+  window.parent.postMessage({ type: 'subscribe-task' }, origin)
+}
+
+export class Subscriber {
+  private static Task = 'subscribe-task'
+
+  constructor(
+    private origin: string = '*'
+  ) { }
+
+  task() {
+    window.parent.postMessage({ type: Subscriber.Task }, this.origin)
+  }
+}
+
+export const subscriber = new Subscriber()
