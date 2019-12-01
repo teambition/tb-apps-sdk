@@ -28,13 +28,36 @@ export const subscribeTask = (origin: string = '*') => {
 
 export class Subscriber {
   private static Task = 'subscribe-task'
+  private refs = Object.create(null)
 
   constructor(
     private origin: string = '*'
   ) { }
 
-  task() {
+  task(callback?: (data: any) => void): () => void {
+    if (this.refs.tasks) {
+      throw new Error('Task is subscribed already, Please dispose previous handler.')
+    }
+
+    this.refs.tasks = true
+
+    const handler = (evt: MessageEvent) => {
+      if (!evt.data || evt.data.type !== 'transfer') {
+        return
+      }
+
+      if (typeof callback === 'function') {
+        callback(evt.data.payload)
+      }
+    }
+
+    window.addEventListener('message', handler)
     window.parent.postMessage({ type: Subscriber.Task }, this.origin)
+
+    return () => {
+      this.refs.tasks = false
+      window.removeEventListener('message', handler)
+    }
   }
 }
 
