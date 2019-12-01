@@ -34,7 +34,7 @@ jobs:
       - run: npm run cover
       - run:
           name: test-coverage
-          command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+          command: cat ./packages/tb-apps-sdk/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
 workflows:
   version: 2
