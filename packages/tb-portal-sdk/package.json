@@ -56,5 +56,6 @@
       "tslint -c tslint.json -p tsconfig.json --fix -e \"**/test/expect/**\"",
       "git add"
     ]
-  }
+  },
+  "gitHead": "5d08a6e1d060bc7ba2e6a9a9b39ecce38ab57aaf"
 }
