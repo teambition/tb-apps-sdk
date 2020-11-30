@@ -18,6 +18,9 @@ export interface PluginAPI {
    * 关闭 iframe 弹窗
    */
   close(): Promise<void>
+
+  // 获取 preference 信息
+  preference(): Promise<{ locale: string }>
 }
 
 class HostAPI extends APIBase implements PluginAPI {
@@ -34,6 +37,13 @@ class HostAPI extends APIBase implements PluginAPI {
   close() {
     bridge && bridge.call('exit')
     return this.call('close')
+  }
+
+  preference(...params: any[]) {
+    if (bridge) {
+      return Promise.resolve({ locale: 'zh' })
+    }
+    return this.call<{ locale: string }>('preference', ...params)
   }
 }
 

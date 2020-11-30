@@ -5,6 +5,7 @@ export interface AppTabAPI {
   essage(type: 'error' | 'info' | 'open' | 'success' | 'warning', ...params: any[]): Promise<void>
   openDetail(type: 'task' | 'date' | 'file' | 'post' | 'bookkeeping', ...params: any[]): Promise<void>
   toggleLift(opened: boolean, ...params: any[]): Promise<void>
+  preference(): Promise<{ locale: string }>
 }
 
 class HostAPI extends APIBase {
@@ -19,6 +20,10 @@ class HostAPI extends APIBase {
 
   toggleLift(...params: any[]) {
     return this.call('toggleLift', ...params)
+  }
+
+  preference(...params: any[]) {
+    return this.call<{ locale: string }>('preference', ...params)
   }
 
 }
