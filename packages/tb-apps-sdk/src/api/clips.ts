@@ -7,15 +7,12 @@ export interface ClipsAPI {
 }
 
 class HostAPI extends APIBase {
-
   essage(...params: any[]) {
     return this.call('essage', ...params)
   }
-
   copyText(text: string) {
     return this.call('copyText', text)
   }
-
 }
 
 export const hostAPI: IFactory<ClipsAPI> = (sdk: AppSDK) => {
