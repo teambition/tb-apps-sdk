@@ -13,7 +13,6 @@ class HostAPI extends APIBase {
   copyText(text: string) {
     return this.call('copyText', text)
   }
-
 }
 
 export const hostAPI: IFactory<ClipsAPI> = (sdk: AppSDK) => {
