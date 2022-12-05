@@ -104,7 +104,7 @@ export class AppSDK {
           this.targetId = resp.data.targetId
           this.targetOrigin = resp.data.origin
           this.initialize = true
-          this.source = resp.source as Window
+          this.source = this.getSource(resp.source as Window)
           this.sameOrigin = resp.data.origin === document.location.origin
           this.connector.resolve()
         }
@@ -169,4 +169,12 @@ export class AppSDK {
     )
   }
 
+  private getSource(source) {
+    // 钉钉环境会改变 window，导致 source.postMessage 无法发送成功，此时使用 window.parent
+    // 钉钉环境改变 window, 无法使用 source.navigator.userAgent 验证
+    if (window && window.navigator && /DingTalk/.test(window.navigator.userAgent)) {
+      return window.parent
+    }
+    return source
+  }
 }
