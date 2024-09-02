@@ -8,7 +8,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "importHelpers": true,
+    "importHelpers": false,
     "jsx": "react",
     "moduleResolution": "node",
     "pretty": true,

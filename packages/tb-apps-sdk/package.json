@@ -1,6 +1,6 @@
 {
   "name": "tb-apps-sdk",
-  "version": "0.7.1-alpha.6",
+  "version": "0.7.1-alpha.7",
   "description": "A sdk for communications between teambiton web and other envs.",
   "main": "./index.js",
   "scripts": {
@@ -23,9 +23,6 @@
     "url": "https://github.com/teambition/tb-apps-sdk/issues"
   },
   "homepage": "https://github.com/teambition/tb-apps-sdk",
-  "peerDependencies": {
-    "tslib": "^1.6.0"
-  },
   "devDependencies": {
     "@types/chai": "^4.1.3",
     "@types/mocha": "^5.2.1",
